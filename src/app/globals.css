@@ -1,26 +1,434 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --foreground-rgb: 226, 232, 240;
+  --background-start: hsl(232, 47%, 10%);
+  --background-end: hsl(240, 60%, 5%);
+  
+  --accent-primary: #6d28d9;
+  --accent-secondary: #7e22ce;
+  --accent-gold: #f59e0b;
+  --accent-glow: rgba(124, 58, 237, 0.5);
+  
+  --card-bg: rgba(17, 24, 39, 0.75);
+  --card-border: rgba(124, 58, 237, 0.2);
+  --card-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  
+  --glass-highlight: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.08);
+
+  /* Compatibility color spectrum */
+  --compat-95: #059669; /* Excellent - emerald green */
+  --compat-90: #0d9488; /* Strong - teal */
+  --compat-85: #0891b2; /* Strong - cyan */
+  --compat-80: #0284c7; /* Good - light blue */
+  --compat-75: #2563eb; /* Good - blue */
+  --compat-70: #4f46e5; /* Good - indigo */
+  --compat-65: #7c3aed; /* Moderate - violet */
+  --compat-60: #9333ea; /* Moderate - purple */
+  --compat-55: #c026d3; /* Moderate - fuchsia */
+  --compat-50: #db2777; /* Challenging - pink */
+  --compat-45: #e11d48; /* Challenging - rose */
+  --compat-40: #dc2626; /* Challenging - red */
+
+  /* Strengths and challenges */
+  --strength-bg: rgba(16, 185, 129, 0.05);
+  --strength-border: rgba(16, 185, 129, 0.2);
+  --challenge-bg: rgba(239, 68, 68, 0.05);
+  --challenge-border: rgba(239, 68, 68, 0.2);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground-rgb: 15, 23, 42;
+    --background-start: hsl(240, 20%, 98%);
+    --background-end: hsl(220, 20%, 97%);
+    
+    --card-bg: rgba(255, 255, 255, 0.9);
+    --card-border: rgba(124, 58, 237, 0.1);
+    --card-shadow: 0 8px 20px rgba(124, 58, 237, 0.06);
+    
+    --glass-highlight: rgba(255, 255, 255, 0.9);
+    --glass-border: rgba(124, 58, 237, 0.1);
+
+    /* Strengths and challenges - light mode */
+    --strength-bg: rgba(16, 185, 129, 0.1);
+    --strength-border: rgba(16, 185, 129, 0.2);
+    --challenge-bg: rgba(239, 68, 68, 0.1);
+    --challenge-border: rgba(239, 68, 68, 0.2);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    color: rgb(var(--foreground-rgb));
+    background: linear-gradient(to bottom, var(--background-start), var(--background-end)) fixed;
+    min-height: 100vh;
+    overflow-x: hidden;
+    text-rendering: optimizeSpeed;
+  }
+  
+  h1, h2, h3, h4 {
+    @apply font-bold tracking-tight;
+  }
+  
+  /* Simplified scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: rgba(var(--foreground-rgb), 0.05);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: var(--accent-primary);
+    border-radius: 4px;
+  }
+}
+
+@layer components {
+  /* Premium Card - simplified for performance */
+  .premium-card {
+    @apply rounded-xl p-6 relative;
+    background: var(--card-bg);
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--card-border);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  /* Premium Button */
+  .premium-btn {
+    @apply px-6 py-3 font-semibold rounded-full transition-colors duration-200;
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    color: white;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
+    will-change: transform;
+  }
+  
+  .premium-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(124, 58, 237, 0.3);
+  }
+  
+  .premium-btn:active {
+    transform: translateY(1px);
+  }
+  
+  .premium-btn:disabled {
+    @apply opacity-60 cursor-not-allowed;
+    transform: translateY(0);
+  }
+  
+  /* MBTI Button - simplified for performance */
+  .mbti-button {
+    @apply rounded-lg py-2 px-2 font-medium transition-colors duration-200 text-center;
+    background: rgba(var(--foreground-rgb), 0.03);
+    border: 1px solid rgba(var(--foreground-rgb), 0.08);
+  }
+  
+  .mbti-button:hover {
+    @apply shadow-sm;
+    transform: translateY(-1px);
+    background: rgba(var(--foreground-rgb), 0.06);
+  }
+  
+  .mbti-button-selected {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    @apply text-white border-0 shadow-md;
+  }
+
+  .mbti-button-selected:hover {
+    transform: translateY(-1px);
+  }
+  
+  /* Typography */
+  .heading-gradient {
+    @apply font-extrabold text-transparent bg-clip-text;
+    background-image: linear-gradient(135deg, #a855f7, #7c3aed);
+  }
+  
+  .text-gradient-gold {
+    @apply font-bold text-transparent bg-clip-text;
+    background-image: linear-gradient(135deg, #fbbf24, #d97706);
+  }
+  
+  /* Compatibility result styling */
+  .compatibility-header {
+    @apply flex items-center justify-between pb-4 mb-6;
+    border-bottom: 1px solid rgba(var(--foreground-rgb), 0.1);
+  }
+  
+  .compatibility-badge {
+    @apply px-4 py-1 text-sm font-medium rounded-full;
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    color: white;
+    box-shadow: 0 2px 8px rgba(124, 58, 237, 0.2);
+  }
+  
+  .compatibility-section h3 {
+    @apply text-lg font-semibold mb-3 text-transparent bg-clip-text;
+    background-image: linear-gradient(135deg, #a855f7, #7c3aed);
+  }
+  
+  .compatibility-section p {
+    @apply leading-relaxed mb-5 opacity-90;
+  }
+
+  /* Compatibility percentage display */
+  .compat-meter {
+    @apply flex flex-col items-center justify-center mb-12 pt-2;
+    position: relative;
+    width: 180px;
+    height: 180px;
+    margin: 0 auto 2.5rem;
+  }
+
+  .compat-circle {
+    @apply rounded-full;
+    width: 180px;
+    height: 180px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .compat-circle::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: conic-gradient(
+      var(--circle-color) calc(var(--circle-percent) * 1%),
+      rgba(var(--foreground-rgb), 0.08) 0
+    );
+    mask: radial-gradient(farthest-side, transparent 55%, #000 56%);
+    -webkit-mask: radial-gradient(farthest-side, transparent 55%, #000 56%);
+    animation: circleFill 1.5s ease-out forwards;
+    opacity: 0;
+  }
+
+  .compat-circle::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: 50%;
+    border: 1px solid rgba(124, 58, 237, 0.1);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .compat-inner {
+    @apply rounded-full flex items-center justify-center font-bold;
+    width: 110px;
+    height: 110px;
+    background: radial-gradient(circle at center, rgba(17, 24, 39, 0.9), rgba(17, 24, 39, 0.7));
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3), 0 0 0 5px rgba(124, 58, 237, 0.05);
+    color: var(--score-text-color, white);
+    position: absolute;
+    z-index: 1;
+    overflow: hidden;
+    animation: scaleIn 0.3s ease-out forwards;
+  }
+
+  .compat-inner::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, 
+                               rgba(255, 255, 255, 0.12) 0%, 
+                               rgba(255, 255, 255, 0.05) 40%, 
+                               transparent 70%);
+    z-index: 1;
+  }
+
+  .compat-percentage {
+    font-size: 2.5rem;
+    position: relative;
+    z-index: 2;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    transform: translateY(5px);
+    animation: fadeInUp 0.6s ease-out 0.8s forwards;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .compat-percentage span {
+    font-size: 1rem;
+    opacity: 0.8;
+    margin-left: 1px;
+  }
+
+  .compat-indicators {
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    pointer-events: none;
+    animation: fadeIn 0.6s ease-out 0.3s forwards;
+    opacity: 0;
+  }
+
+  .compat-indicator {
+    --rotation: calc((var(--index) - 1) * 36deg);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 2px;
+    height: 8px;
+    margin-left: -1px;
+    margin-top: -4px;
+    background-color: rgba(var(--foreground-rgb), 0.15);
+    transform-origin: center 90px;
+    transform: rotate(var(--rotation)) translateY(-86px);
+  }
+
+  .compat-indicator-major {
+    height: 12px;
+    width: 2px;
+    background-color: rgba(var(--foreground-rgb), 0.3);
+  }
+
+  .compat-label {
+    @apply text-center text-base font-medium mt-2;
+    color: var(--circle-color, var(--accent-primary));
+    position: absolute;
+    bottom: -42px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(5px);
+    animation: fadeInUp 0.5s ease-out 1s forwards;
+    letter-spacing: 0.5px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Score-specific colors */
+  .score-40 { --circle-color: var(--compat-40) !important; --score-text-color: #fecaca !important; }
+  .score-45 { --circle-color: var(--compat-45) !important; --score-text-color: #fecaca !important; }
+  .score-50 { --circle-color: var(--compat-50) !important; --score-text-color: #fbcfe8 !important; }
+  .score-55 { --circle-color: var(--compat-55) !important; --score-text-color: #f5d0fe !important; }
+  .score-60 { --circle-color: var(--compat-60) !important; --score-text-color: #e9d5ff !important; }
+  .score-65 { --circle-color: var(--compat-65) !important; --score-text-color: #ddd6fe !important; }
+  .score-70 { --circle-color: var(--compat-70) !important; --score-text-color: #c7d2fe !important; }
+  .score-75 { --circle-color: var(--compat-75) !important; --score-text-color: #bfdbfe !important; }
+  .score-80 { --circle-color: var(--compat-80) !important; --score-text-color: #a5f3fc !important; }
+  .score-85 { --circle-color: var(--compat-85) !important; --score-text-color: #99f6e4 !important; }
+  .score-90 { --circle-color: var(--compat-90) !important; --score-text-color: #a7f3d0 !important; }
+  .score-95 { --circle-color: var(--compat-95) !important; --score-text-color: #a7f3d0 !important; }
+
+  /* Compatibility rating badge */
+  .compat-rating-badge {
+    @apply px-6 py-3 rounded-full font-medium text-center;
+    background-color: var(--circle-color, var(--accent-primary));
+    color: white;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15), inset 0 1px 2px rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    letter-spacing: 0.5px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .compat-rating-badge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.1);
+  }
+
+  /* Section headers */
+  .section-header {
+    @apply text-xl font-bold mb-3 text-transparent bg-clip-text;
+    background-image: linear-gradient(135deg, #a855f7, #7c3aed);
+  }
+
+  /* Strengths and Challenges panels */
+  .strengths-panel {
+    background-color: var(--strength-bg);
+    border: 1px solid var(--strength-border);
+    @apply rounded-lg p-4 transition-all;
+  }
+
+  .challenges-panel {
+    background-color: var(--challenge-bg);
+    border: 1px solid var(--challenge-border);
+    @apply rounded-lg p-4 transition-all;
+  }
+
+  .strength-item {
+    @apply flex items-start py-1;
+  }
+
+  .strength-item:before {
+    content: '+';
+    @apply text-green-500 font-bold mr-2 leading-tight;
+  }
+
+  .challenge-item {
+    @apply flex items-start py-1;
+  }
+
+  .challenge-item:before {
+    content: '-';
+    @apply text-red-500 font-bold mr-2 leading-tight;
+  }
+}
+
+/* Optimized animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { 
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes circleFill {
+  0% {
+    opacity: 0;
+    transform: rotate(-90deg);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.4s ease-out forwards;
+  will-change: transform, opacity;
 }
