@@ -82,10 +82,10 @@ You can customize the app by:
 ## 📱 Screenshots
 
 <!-- Replace these with actual screenshots -->
-![Selection Screen](![image](https://github.com/user-attachments/assets/b263731f-dff3-49ae-9b4a-39ffd52abeaa)
-)
-![Compatibility Results](![image](https://github.com/user-attachments/assets/b5f36d8c-8bcd-4322-acb1-623af50b873e)
-)
+![image](https://github.com/user-attachments/assets/b263731f-dff3-49ae-9b4a-39ffd52abeaa)
+
+![image](https://github.com/user-attachments/assets/b5f36d8c-8bcd-4322-acb1-623af50b873e)
+
 
 ## 🤝 Contributing
 
