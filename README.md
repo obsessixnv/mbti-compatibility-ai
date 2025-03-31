@@ -1,8 +1,6 @@
 # MBTI Compatibility Checker
 
-A premium web application that helps you understand compatibility between MBTI personality types. This app provides detailed insights into how different MBTI types interact in relationships, friendships, and work environments.
-
-![MBTI Compatibility Checker](https://i.imgur.com/XYZ123.png) <!-- Replace with actual screenshot -->
+An opensource web application that helps you understand compatibility between MBTI personality types. This app provides detailed insights into how different MBTI types interact in relationships, friendships, and work environments.
 
 ## ✨ Features
 
