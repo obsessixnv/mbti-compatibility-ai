@@ -84,9 +84,10 @@ You can customize the app by:
 ## 📱 Screenshots
 
 <!-- Replace these with actual screenshots -->
-![Selection Screen](https://i.imgur.com/ABC123.png)
-![Compatibility Results](https://i.imgur.com/DEF456.png)
-![Mobile View](https://i.imgur.com/GHI789.png)
+![Selection Screen](![image](https://github.com/user-attachments/assets/b263731f-dff3-49ae-9b4a-39ffd52abeaa)
+)
+![Compatibility Results](![image](https://github.com/user-attachments/assets/b5f36d8c-8bcd-4322-acb1-623af50b873e)
+)
 
 ## 🤝 Contributing
 
